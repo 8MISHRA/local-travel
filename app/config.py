@@ -20,10 +20,13 @@ class Config:
     JWT_REFRESH_EXPIRY = timedelta(days=7)
     JWT_ALGORITHM = "HS256"
 
-    # Database
-    SQLALCHEMY_DATABASE_URI = os.environ.get(
+    # Database — fix Render's postgres:// to postgresql://
+    _database_url = os.environ.get(
         "DATABASE_URL", "postgresql://postgres:postgres@localhost:5432/travel_platform"
     )
+    if _database_url.startswith("postgres://"):
+        _database_url = _database_url.replace("postgres://", "postgresql://", 1)
+    SQLALCHEMY_DATABASE_URI = _database_url
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
     # Redis
@@ -91,7 +94,8 @@ class ProductionConfig(Config):
     # In production, these MUST be set via environment variables
     SECRET_KEY = os.environ.get("SECRET_KEY")
     JWT_SECRET = os.environ.get("JWT_SECRET")
-    SQLALCHEMY_DATABASE_URI = os.environ.get("DATABASE_URL")
+
+    # Inherit SQLALCHEMY_DATABASE_URI from Config (which handles postgres:// fix)
 
 
 # Configuration mapping by environment name
