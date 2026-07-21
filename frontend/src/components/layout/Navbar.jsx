@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Menu, X, MapPin, User, LogOut } from 'lucide-react';
 import { Button } from '../ui/Button';
 import { cn } from '../../lib/utils';
@@ -15,7 +15,13 @@ const navLinks = [
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
   const { user, isAuthenticated, logout } = useAuth();
+
+  const handleLogout = async () => {
+    await logout();
+    navigate('/');
+  };
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md border-b border-charcoal/5 shadow-sm">
@@ -57,7 +63,7 @@ export function Navbar() {
                     {user?.full_name?.split(' ')[0] || 'Dashboard'}
                   </Button>
                 </Link>
-                <Button variant="outline" size="sm" onClick={logout} className="gap-1">
+                <Button variant="outline" size="sm" onClick={handleLogout} className="gap-1">
                   <LogOut className="w-3 h-3" />
                   Logout
                 </Button>

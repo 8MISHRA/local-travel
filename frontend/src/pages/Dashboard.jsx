@@ -103,7 +103,7 @@ export default function Dashboard() {
                         <p className="text-lg font-bold text-charcoal">₹{booking.amount.toLocaleString()}</p>
                         <p className="text-xs text-charcoal/40">{booking.tier} tier</p>
                       </div>
-                      <Button variant="ghost" size="sm">View</Button>
+                      <Button variant="ghost" size="sm" onClick={() => alert(`Booking Details:\n\nID: ${booking.id}\nPackage: ${booking.package}\nDates: ${booking.dates}\nStatus: ${config.label}\nAmount: ₹${booking.amount.toLocaleString()}\nTier: ${booking.tier}`)}>View</Button>
                     </div>
                   </div>
                   <div className="mt-3 pt-3 border-t border-charcoal/5 flex items-center justify-between">
