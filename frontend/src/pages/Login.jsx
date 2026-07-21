@@ -1,16 +1,20 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Eye, EyeOff, Mail, Lock, MapPin } from 'lucide-react';
 import { Button } from '../components/ui/Button';
 import { Input } from '../components/ui/Input';
 import { PageTransition } from '../components/layout/PageTransition';
+import { useAuth } from '../context/AuthContext';
 
 export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errors, setErrors] = useState({});
+  const [apiError, setApiError] = useState('');
+  const { login, loading } = useAuth();
+  const navigate = useNavigate();
 
   const validate = () => {
     const newErrors = {};
@@ -22,11 +26,16 @@ export default function Login() {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setApiError('');
     if (validate()) {
-      // Mock login — just redirect
-      alert('Login successful! (Mock)');
+      try {
+        await login(email, password);
+        navigate('/dashboard');
+      } catch (err) {
+        setApiError(err.message || 'Login failed. Please check your credentials.');
+      }
     }
   };
 
@@ -110,9 +119,13 @@ export default function Login() {
                 <a href="#" className="text-sm text-saffron hover:underline">Forgot password?</a>
               </div>
 
-              <Button type="submit" size="lg" className="w-full">
-                Log In
+              <Button type="submit" size="lg" className="w-full" disabled={loading}>
+                {loading ? 'Logging in...' : 'Log In'}
               </Button>
+
+              {apiError && (
+                <p className="text-sm text-red-500 text-center bg-red-50 p-2 rounded-lg">{apiError}</p>
+              )}
             </form>
 
             {/* Divider */}

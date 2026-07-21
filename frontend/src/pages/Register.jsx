@@ -1,15 +1,19 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Eye, EyeOff, Mail, Lock, User, Phone, MapPin } from 'lucide-react';
 import { Button } from '../components/ui/Button';
 import { Input } from '../components/ui/Input';
 import { PageTransition } from '../components/layout/PageTransition';
+import { useAuth } from '../context/AuthContext';
 
 export default function Register() {
   const [showPassword, setShowPassword] = useState(false);
   const [form, setForm] = useState({ name: '', email: '', phone: '', password: '', confirmPassword: '' });
   const [errors, setErrors] = useState({});
+  const [apiError, setApiError] = useState('');
+  const { register, loading } = useAuth();
+  const navigate = useNavigate();
 
   const update = (field, value) => setForm((prev) => ({ ...prev, [field]: value }));
 
@@ -21,16 +25,22 @@ export default function Register() {
     if (!form.phone) newErrors.phone = 'Phone number is required';
     else if (!/^\d{10}$/.test(form.phone)) newErrors.phone = 'Enter a valid 10-digit number';
     if (!form.password) newErrors.password = 'Password is required';
-    else if (form.password.length < 6) newErrors.password = 'Password must be at least 6 characters';
+    else if (form.password.length < 8) newErrors.password = 'Password must be at least 8 characters';
     if (form.password !== form.confirmPassword) newErrors.confirmPassword = 'Passwords do not match';
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setApiError('');
     if (validate()) {
-      alert('Registration successful! (Mock)');
+      try {
+        await register(form.email, form.password, form.name, form.phone);
+        navigate('/dashboard');
+      } catch (err) {
+        setApiError(err.message || 'Registration failed. Please try again.');
+      }
     }
   };
 
@@ -159,9 +169,13 @@ export default function Register() {
                 </label>
               </div>
 
-              <Button type="submit" size="lg" className="w-full">
-                Create Account
+              <Button type="submit" size="lg" className="w-full" disabled={loading}>
+                {loading ? 'Creating Account...' : 'Create Account'}
               </Button>
+
+              {apiError && (
+                <p className="text-sm text-red-500 text-center bg-red-50 p-2 rounded-lg">{apiError}</p>
+              )}
             </form>
 
             {/* Divider */}
