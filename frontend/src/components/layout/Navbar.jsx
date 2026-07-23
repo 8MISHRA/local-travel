@@ -29,8 +29,11 @@ export function Navbar() {
         <div className="flex items-center justify-between h-16 md:h-18">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2 group">
-            <span className="font-display italic text-2xl text-charcoal group-hover:text-saffron transition-colors">
-              Yatra<span className="not-italic font-sans font-bold text-saffron">Flow</span>
+            <div className="w-8 h-8 rounded-lg gradient-saffron flex items-center justify-center">
+              <MapPin className="w-4 h-4 text-white" />
+            </div>
+            <span className="font-display text-xl font-bold text-charcoal group-hover:text-saffron transition-colors">
+              YatraFlow
             </span>
           </Link>
 

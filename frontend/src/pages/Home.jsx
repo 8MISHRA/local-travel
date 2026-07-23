@@ -50,12 +50,13 @@ export default function Home() {
               <MapPin className="w-4 h-4 text-saffron" />
               Varanasi & Mirzapur, India
             </motion.div>
-            <h1 className="font-display italic text-4xl md:text-6xl lg:text-7xl text-white mb-6 leading-[1.1]">
-              The ghats are waiting.
-              <span className="block not-italic font-sans font-semibold text-3xl md:text-4xl lg:text-5xl mt-3 text-white/90">Your trip, fully handled.</span>
+            <h1 className="font-display text-4xl md:text-6xl lg:text-7xl font-bold text-white mb-6 leading-tight">
+              Experience the Soul of
+              <span className="text-gradient block"> Ancient Bharat</span>
             </h1>
-            <p className="text-base md:text-lg text-white/70 mb-8 leading-relaxed max-w-lg">
-              Land in Varanasi or Mirzapur. A local scout picks you up. Hotels, transport, hidden gems, food, temples — sorted. You just show up.
+            <p className="text-lg md:text-xl text-white/80 mb-8 leading-relaxed">
+              Just reach Varanasi or Mirzapur. We take care of everything else.
+              Curated experiences, local guides, premium stays.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
               <Link to="/packages">

@@ -8,9 +8,12 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
           {/* Brand */}
           <div className="space-y-4">
-            <span className="font-display italic text-2xl text-white">
-              Yatra<span className="not-italic font-sans font-bold text-saffron">Flow</span>
-            </span>
+            <div className="flex items-center gap-2">
+              <div className="w-8 h-8 rounded-lg gradient-saffron flex items-center justify-center">
+                <MapPin className="w-4 h-4 text-white" />
+              </div>
+              <span className="font-display text-xl font-bold">YatraFlow</span>
+            </div>
             <p className="text-sm text-white/60 leading-relaxed">
               Just reach Varanasi or Mirzapur. We take care of everything else. Premium curated travel experiences.
             </p>

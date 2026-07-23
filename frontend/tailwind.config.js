@@ -69,8 +69,8 @@ export default {
         },
       },
       fontFamily: {
-        sans: ['DM Sans', 'system-ui', 'sans-serif'],
-        display: ['Instrument Serif', 'Georgia', 'serif'],
+        sans: ['Inter', 'system-ui', 'sans-serif'],
+        display: ['Playfair Display', 'serif'],
       },
       animation: {
         'fade-in': 'fadeIn 0.5s ease-in-out',
