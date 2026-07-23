@@ -8,24 +8,28 @@
   }
   body {
     @apply font-sans text-charcoal bg-cream antialiased;
+    font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+  }
+  h1, h2, h3 {
+    text-wrap: balance;
+  }
+  p {
+    text-wrap: pretty;
   }
 }
 
 @layer components {
   .container-custom {
-    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+    @apply max-w-6xl mx-auto px-5 sm:px-6 lg:px-8;
   }
   .text-gradient {
-    @apply bg-gradient-to-r from-saffron to-gold bg-clip-text text-transparent;
-  }
-  .gradient-saffron {
-    background: linear-gradient(135deg, #FF6B35 0%, #FFB800 100%);
+    @apply bg-gradient-to-r from-saffron via-saffron-400 to-gold bg-clip-text text-transparent;
   }
   .gradient-river {
-    background: linear-gradient(135deg, #1E3A5F 0%, #2F5D8D 100%);
+    background: linear-gradient(145deg, #1E3A5F 0%, #2a4d73 50%, #1E3A5F 100%);
   }
   .gradient-saffron {
-    background: linear-gradient(135deg, #FF6B35 0%, #FFB800 100%);
+    background: linear-gradient(145deg, #FF6B35 0%, #ff8a5c 100%);
   }
   .scrollbar-hide {
     -ms-overflow-style: none;
