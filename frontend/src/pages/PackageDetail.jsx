@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Star, Clock, MapPin, Users, Check, X, ArrowLeft, Calendar } from 'lucide-react';
@@ -24,6 +25,7 @@ export default function PackageDetail() {
   }
 
   const discount = Math.round(((pkg.originalPrice - pkg.price) / pkg.originalPrice) * 100);
+  const [selectedTier, setSelectedTier] = useState(0);
 
   return (
     <PageTransition>
@@ -166,10 +168,10 @@ export default function PackageDetail() {
                 <div className="mb-4">
                   <span className="text-sm text-charcoal/40 line-through">₹{pkg.originalPrice.toLocaleString()}</span>
                   <div className="flex items-baseline gap-1">
-                    <span className="text-3xl font-bold text-charcoal">₹{pkg.price.toLocaleString()}</span>
+                    <span className="text-3xl font-bold text-charcoal">₹{pkg.tiers[selectedTier].price.toLocaleString()}</span>
                     <span className="text-sm text-charcoal/50">/person</span>
                   </div>
-                  <Badge variant="success" className="mt-1">Save ₹{(pkg.originalPrice - pkg.price).toLocaleString()}</Badge>
+                  <Badge variant="success" className="mt-1">Save ₹{(pkg.originalPrice - pkg.tiers[selectedTier].price).toLocaleString()}</Badge>
                 </div>
 
                 <h3 className="font-display font-semibold mb-3">Choose Your Tier</h3>
@@ -177,13 +179,19 @@ export default function PackageDetail() {
                   {pkg.tiers.map((tier, i) => (
                     <div
                       key={tier.name}
-                      className={`p-3 rounded-lg border cursor-pointer transition-all ${i === 0 ? 'border-saffron bg-saffron/5' : 'border-charcoal/10 hover:border-saffron/50'}`}
+                      onClick={() => setSelectedTier(i)}
+                      className={`p-3 rounded-lg border cursor-pointer transition-all ${i === selectedTier ? 'border-saffron bg-saffron/5 ring-1 ring-saffron/30' : 'border-charcoal/10 hover:border-saffron/50'}`}
                     >
                       <div className="flex items-center justify-between mb-1">
-                        <span className="font-semibold text-sm">{tier.name}</span>
+                        <div className="flex items-center gap-2">
+                          <div className={`w-4 h-4 rounded-full border-2 flex items-center justify-center ${i === selectedTier ? 'border-saffron' : 'border-charcoal/20'}`}>
+                            {i === selectedTier && <div className="w-2 h-2 rounded-full bg-saffron" />}
+                          </div>
+                          <span className="font-semibold text-sm">{tier.name}</span>
+                        </div>
                         <span className="text-sm font-bold">₹{tier.price.toLocaleString()}</span>
                       </div>
-                      <p className="text-xs text-charcoal/50">{tier.hotel} • {tier.transport}</p>
+                      <p className="text-xs text-charcoal/50 ml-6">{tier.hotel} • {tier.transport}</p>
                     </div>
                   ))}
                 </div>
